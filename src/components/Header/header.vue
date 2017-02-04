@@ -45,18 +45,28 @@
         <div class="detailMain">
           <div class="name">{{shopName}}</div>
           <v-stars :score=3.9 />
-          <!-- 粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊
-          粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊 -->
           <div class="title">
             <div class="line"></div>
             <div class="text">优惠信息</div>
             <div class="line"></div>
+          </div>
+          <div class="infoList">
+            <div
+              class="info" 
+              v-if="seller.supports" 
+              v-for="(_support, index) in seller.supports"
+               >
+              <i :class="infoList[seller.supports[index].type]"></i>
+              <span>{{seller.supports[index].description}}</span>
+            </div>
+          </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <div class="teller">
+            {{seller.bulletin}}
           </div>
         </div>
         <div class="detailClose">
@@ -76,13 +86,15 @@ import Stars from 'components/stars/stars';
 export default {
   data () {
     return {
+      'seller': seller.seller,
       'deliverWay': seller.seller.description,
       'deliverTime': '38分钟到达',
       'couponIntro': '在线支付满28减5，满50减10',
       'detailShow': false,
       'header': 'true',
       'noticeCon': '粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊粥品香坊',
-      'shopName': '粥品香坊（大运村）'
+      'shopName': '粥品香坊（大运村）',
+      'infoList': ['decrease', 'discount', 'guarantee', 'invoice', 'invoice']
     }
   },
   components: {
@@ -100,7 +112,7 @@ export default {
     // console.log(this.$el)
   },
   mounted: function () {
-    // console.log(seller)
+    // console.log(seller.seller.supports)
     this.$router.push({
       path: '/goods',
       component: require('../category/goods')
@@ -119,7 +131,8 @@ export default {
 
 <style scoped>
   .blurActived {
-    filter: blur(10px);
+    -webkit-filter: blur(10px);
+            filter: blur(10px);
     overflow: hidden;
   }
   .blur{
@@ -129,7 +142,8 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    filter: blur(10px);
+    -webkit-filter: blur(10px);
+            filter: blur(10px);
     z-index: -1;
     background: url(../../assets/logo.png) center top no-repeat;
     background-size: cover;
@@ -226,8 +240,12 @@ export default {
     background: #ffffff;
     border-bottom: 1px solid rgba(7, 17, 27, .1);
     height: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
   }
   .routes {
     font-size: 14px;
@@ -305,7 +323,8 @@ export default {
   margin: -64px auto;
   text-align: center;
   line-height: 32px;
-  color: #ffffff;
+  color: rgba(255, 255, 255, .5);
+  font-size: 32px;
 }
 .detailMain .name {
   text-align: center;
@@ -317,12 +336,18 @@ export default {
 }
 .detailMain .title {
   width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  margin: 0 36px 24px 36px;
-  justify-content: space-between;
+  margin: 0 auto 24px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .detailMain .title .line {
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   width: 112px;
   height: 0;
   border: 1px solid rgba(255, 255, 255, .2);
@@ -334,6 +359,60 @@ export default {
   font-size: 14px;
   margin: 0 12px;
   color: #ffffff;
-
+}
+.discount {
+  width: 16px;
+  height: 16px;
+  background: url(../../assets/discount_2@2x.png);
+  background-size: cover;
+}
+.decrease {
+  width: 16px;
+  height: 16px;
+  background: url(../../assets/decrease_2@2x.png);
+  background-size: cover;
+}
+.guarantee {
+  width: 16px;
+  height: 16px;
+  background: url(../../assets/guarantee_2@2x.png);
+  background-size: cover;
+}
+.invoice {
+  width: 16px;
+  height: 16px;
+  background: url(../../assets/invoice_4@2x.png);
+  background-size: cover;
+}
+.detailMain .infoList{
+  width: 75%;
+  margin: 0 auto 28px;
+}
+.detailMain .info{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.detailMain .info i{
+  margin-right: 6px;
+  display: inline-block;
+}
+.detailMain .info span{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 200;
+  color: rgb(255, 255, 255);
+}
+.detailMain .teller{
+  display: flex;
+  width: 75%;
+  margin:0 auto;
+  font-size: 12px;
+  font-weight: 200;
+  color: rgb(255, 255, 255);
+  line-height: 24px;  
 }
 </style>

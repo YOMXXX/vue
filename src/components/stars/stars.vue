@@ -1,6 +1,6 @@
 <template>
 	<div class="stars">
-		<span class="star" v-for="(_star, index) in _stars" :class="_star">{{index}}</span>
+		<span class="star" v-for="(_star, index) in _stars" :class="_star"></span>
 	</div>
 </template>
 <script>
